@@ -1,4 +1,6 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
+# import os
+# import csv
 from src.item import Item
 
 def test_calculate_total_price():
@@ -18,3 +20,32 @@ def test_apply_discount():
 
     assert item1.price == 8000.0
     assert item2.price == 20000
+
+
+def test_instantiate_from_csv():
+    with open('test_items.csv', 'w', newline='') as csvfile:
+        fieldnames = ['name', 'price', 'quantity']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+        writer.writeheader()
+        writer.writerow({'name': 'Телефон', 'price': '500', 'quantity': '10'})
+        writer.writerow({'name': 'Наушники', 'price': '100', 'quantity': '20'})
+
+    Item.instantiate_from_csv('test_items.csv')
+
+    assert len(Item.all) == 2
+    assert Item.all[0].name == 'Телефон'
+    assert Item.all[0].price == 500.0
+    assert Item.all[0].quantity == 10
+    assert Item.all[1].name == 'Наушники'
+    assert Item.all[1].price == 100.0
+    assert Item.all[1].quantity == 20
+
+    os.remove('test_items.csv')
+
+
+def test_string_to_number():
+    assert Item.string_to_number('123') == 123
+    assert Item.string_to_number('3.14') == 3.14
+    assert Item.string_to_number('-50') == -50
+    assert Item.string_to_number('invalid') == 0
