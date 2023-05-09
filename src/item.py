@@ -44,7 +44,7 @@ class Item:
         """
         Класс-метод, инициализирующий экземпляры класса Item данными из файла src/items.csv.
         """
-        with open('C:/Users/user/PycharmProjects/electronics-shop-project/src/items.csv', newline='') as csvfile:
+        with open('../src/items.csv', newline='') as csvfile:
             reader = csv.DictReader(csvfile)
             cls.all.clear()
             for row in reader:
