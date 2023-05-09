@@ -48,4 +48,17 @@ def test_string_to_number():
     assert Item.string_to_number('123') == 123
     assert Item.string_to_number('3.14') == 3.14
     assert Item.string_to_number('-50') == -50
-    assert Item.string_to_number('invalid') == 0
+    assert Item.string_to_number('invalid') is None
+    assert isinstance(Item.string_to_number('123'), int)
+    assert isinstance(Item.string_to_number('3.14'), float)
+    assert isinstance(Item.string_to_number('-50'), int)
+
+
+def test_repr():
+    item = Item('Телефон', 500, 10)
+    assert repr(item) == "Item('Телефон', 500, 10)"
+
+
+def test_str_method():
+    item1 = Item("Смартфон", 10000, 20)
+    assert str(item1) == 'Смартфон'
