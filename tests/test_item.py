@@ -1,6 +1,6 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
-# import os
-# import csv
+import os
+import csv
 from src.item import Item
 
 def test_calculate_total_price():
