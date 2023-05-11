@@ -31,7 +31,7 @@ def test_instantiate_from_csv():
         writer.writerow({'name': 'Телефон', 'price': '500', 'quantity': '10'})
         writer.writerow({'name': 'Наушники', 'price': '100', 'quantity': '20'})
 
-    Item.instantiate_from_csv('test_items.csv')
+    Item.instantiate_from_csv()
 
     assert len(Item.all) == 2
     assert Item.all[0].name == 'Телефон'
@@ -62,3 +62,6 @@ def test_repr():
 def test_str_method():
     item1 = Item("Смартфон", 10000, 20)
     assert str(item1) == 'Смартфон'
+
+
+

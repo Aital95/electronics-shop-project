@@ -57,12 +57,17 @@ class Item:
         return len(cls.all)
 
     @staticmethod
-    def string_to_number(number):
+    def string_to_number(number, default=None):
         """
         Статический метод, преобразующий строку в число.
         """
-        return int(float(number))
-
+        try:
+            return int(number)
+        except ValueError:
+            try:
+                return float(number)
+            except ValueError:
+                return default
     def calculate_total_price(self) -> float:
         """
         Рассчитывает общую стоимость конкретного товара в магазине.
