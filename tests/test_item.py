@@ -63,5 +63,16 @@ def test_str_method():
     item1 = Item("Смартфон", 10000, 20)
     assert str(item1) == 'Смартфон'
 
+def test_item_add():
+    item1 = Item("Смартфон", 10, 20)
+    item2 = Item("Телефон", 20, 30)
+    item3 = item1 + item2
+    assert item3.name == "Смартфон, Телефон"
+    assert item3.price == 15  # (10 + 20) / 2
+    assert item3.quantity == 50
+
+
+
+
 
 
