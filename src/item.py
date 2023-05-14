@@ -27,7 +27,7 @@ class Item:
     def __add__(self, other):
         if isinstance(other, Item):
             return self.quantity + other.quantity
-        raise TypeError(f"unsupported operand type(s) for +: '{type(self)}' and '{type(other)}'")
+        raise TypeError(f"Невозможно выполнить операцию для данных типов: '{type(self)}' и '{type(other)}'")
 
     def __str__(self):
         return self.name
