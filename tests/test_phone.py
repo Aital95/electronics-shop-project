@@ -1,3 +1,4 @@
+import pytest
 from src.phone import Phone
 from src.item import Item
 
@@ -15,3 +16,9 @@ def test_phone_item_addition():
     p1 = Phone("iPhone", 999, "The best phone", 10, 2)
     i1 = Item("Screen protector", 20, "Protects phone screen", 50)
     i2 = p1 + i1  # should raise TypeError
+
+
+def test_number_of_sim():
+    phone = Phone("iPhone", 999, 10, 2)
+    with pytest.raises(ValueError):
+        phone.number_of_sim = -1

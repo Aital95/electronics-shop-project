@@ -14,3 +14,14 @@ class Phone(Item):
         elif isinstance(other, Item):
             return self.quantity + other.quantity
         raise TypeError(f"unsupported operand type(s) for +: '{type(self)}' and '{type(other)}'")
+
+    # @property
+    # def number_of_sim(self):
+    #     return self.__number_of_sim
+    #
+    # @number_of_sim.setter
+    # def number_of_sim(self, number_of_sim):
+    #     if number_of_sim > 0:
+    #         self.__number_of_sim = number_of_sim
+    #     else:
+    #         raise ValueError('Количество физических SIM-карт должно быть целым числом больше нуля.')
