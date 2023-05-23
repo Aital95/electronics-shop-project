@@ -1,14 +1,14 @@
+from src.item import Item
+
+
 class LanguageMixin:
-    def __init__(self):
+    def __init__(self, *args):
+        super().__init__(*args)
         self._language = 'EN'
 
     @property
     def language(self):
         return self._language
-
-    @language.setter
-    def language(self, value):
-        self._language = value
 
     def change_lang(self):
         if self._language == 'EN':
@@ -18,9 +18,9 @@ class LanguageMixin:
         return self
 
 
-class Keyboard(LanguageMixin):
+class Keyboard(LanguageMixin, Item):
     def __init__(self, name, price, warranty):
-        super().__init__()
+        super().__init__(name, price, warranty)
         self.name = name
         self.price = price
         self.warranty = warranty
