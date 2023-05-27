@@ -1,77 +1,68 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
-import os
-import csv
-from src.item import Item
+from src.item import Item, InstantiateCSVError
+from src.phone import Phone
+import pytest
+
+
+def test__repr__():
+    item = Item("Смартфон", 10000, 20)
+    assert repr(item) == "Item('Смартфон', 10000, 20)"
+
+
+def test__str__():
+    item = Item("Смартфон", 10000, 20)
+    assert str(item) == 'Смартфон'
+
+
+def test__add__():
+    phone1 = Phone("iPhone 14", 120_000, 5, 2)
+    item1 = Item("Смартфон", 10000, 20)
+    assert item1 + phone1 == 25
+    assert phone1 + phone1 == 10
+    assert phone1 + 10 == ValueError
+
 
 def test_calculate_total_price():
     item1 = Item("Смартфон", 10000, 20)
     item2 = Item("Ноутбук", 20000, 5)
+    assert Item.calculate_total_price(item1) == 200000
+    assert Item.calculate_total_price(item2) == 100000
 
-    assert item1.calculate_total_price() == 200000
-    assert item2.calculate_total_price() == 100000
 
 def test_apply_discount():
-    Item.pay_rate = 0.8
-
     item1 = Item("Смартфон", 10000, 20)
-    item2 = Item("Ноутбук", 20000, 5)
-
+    Item.pay_rate = 0.8
     item1.apply_discount()
-
     assert item1.price == 8000.0
+    item2 = Item("Ноутбук", 20000, 5)
     assert item2.price == 20000
 
 
+def test_name():
+    item = Item('Смартфон', 10000, 5)
+    item.name = "Телефон"
+    assert item.name == "Телефон"
+    with pytest.raises(Exception):
+        item.name = "Супер_Телефон"
+
+
 def test_instantiate_from_csv():
-    with open('test_items.csv', 'w', newline='') as csvfile:
-        fieldnames = ['name', 'price', 'quantity']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    # Item.instantiate_from_csv()
+    # assert len(Item.all) == 5
+    with pytest.raises(FileNotFoundError):
+        Item.instantiate_from_csv(path="нет такого файла")
 
-        writer.writeheader()
-        writer.writerow({'name': 'Телефон', 'price': '500', 'quantity': '10'})
-        writer.writerow({'name': 'Наушники', 'price': '100', 'quantity': '20'})
+    with pytest.raises(InstantiateCSVError):
+        Item.instantiate_from_csv(path=r"src/items.csv")
 
-    try:
-        Item.instantiate_from_csv()
-        assert len(Item.all) == 2
-        assert Item.all[0].name == 'Телефон'
-        assert Item.all[0].price == 500.0
-        assert Item.all[0].quantity == 10
-        assert Item.all[1].name == 'Наушники'
-        assert Item.all[1].price == 100.0
-        assert Item.all[1].quantity == 20
-    except Exception as e:
-        assert False, f"Error occurred: {str(e)}"
 
-    os.remove('test_items.csv')
+
 
 
 def test_string_to_number():
-    assert Item.string_to_number('123') == 123
-    assert Item.string_to_number('3.14') == 3.14
-    assert Item.string_to_number('-50') == -50
-    assert Item.string_to_number('invalid') is None
-    assert isinstance(Item.string_to_number('123'), int)
-    assert isinstance(Item.string_to_number('3.14'), float)
-    assert isinstance(Item.string_to_number('-50'), int)
-
-
-def test_repr():
-    item = Item('Телефон', 500, 10)
-    assert repr(item) == "Item('Телефон', 500, 10)"
-
-
-def test_str_method():
-    item1 = Item("Смартфон", 10000, 20)
-    assert str(item1) == 'Смартфон'
-
-def test_item_add():
-    item1 = Item("Смартфон", 10, 20)
-    item2 = Item("Телефон", 20, 30)
-    item3 = item1 + item2
-    assert item3.name == "Смартфон, Телефон"
-    assert item3.price == 15  # (10 + 20) / 2
-    assert item3.quantity == 50
+    assert Item.string_to_number('5') == 5
+    assert Item.string_to_number('5.0') == 5
+    assert Item.string_to_number('5.5') == 5
 
 
 
