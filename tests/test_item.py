@@ -31,15 +31,17 @@ def test_instantiate_from_csv():
         writer.writerow({'name': 'Телефон', 'price': '500', 'quantity': '10'})
         writer.writerow({'name': 'Наушники', 'price': '100', 'quantity': '20'})
 
-    Item.instantiate_from_csv()
-
-    assert len(Item.all) == 2
-    assert Item.all[0].name == 'Телефон'
-    assert Item.all[0].price == 500.0
-    assert Item.all[0].quantity == 10
-    assert Item.all[1].name == 'Наушники'
-    assert Item.all[1].price == 100.0
-    assert Item.all[1].quantity == 20
+    try:
+        Item.instantiate_from_csv()
+        assert len(Item.all) == 2
+        assert Item.all[0].name == 'Телефон'
+        assert Item.all[0].price == 500.0
+        assert Item.all[0].quantity == 10
+        assert Item.all[1].name == 'Наушники'
+        assert Item.all[1].price == 100.0
+        assert Item.all[1].quantity == 20
+    except Exception as e:
+        assert False, f"Error occurred: {str(e)}"
 
     os.remove('test_items.csv')
 
